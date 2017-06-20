@@ -1,5 +1,6 @@
 import {
   createTask,
+  deleteTask,
   getTaskById,
   getTasksPaged,
 } from 'stores/taskStore';
@@ -39,6 +40,16 @@ export const PostTask = (event, context, callback) => {
       body: {
         result,
       },
+    });
+  });
+}
+
+export const DeleteTask = (event, context, callback) => {
+  const id = event.pathParameters.id;
+  deleteTask(id)
+  .then(() => {
+    callback(null, {
+      statusCode: 204,
     });
   });
 }

@@ -46,3 +46,13 @@ export const createTask = (task: Task): Promise<any> => {
         });
     });
 }
+
+export const deleteTask = (id: number): Promise<any> => {
+    return new Promise((resolve, reject) => {
+        const query = `DELETE FROM Task WHERE id = ${id}`;
+        connection.query(query, (error, result) => {
+            if (error) { reject(error) }
+            resolve(result);
+        });
+    });
+}

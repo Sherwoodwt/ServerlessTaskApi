@@ -82,6 +82,15 @@
 	        });
 	    });
 	};
+	exports.DeleteTask = (event, context, callback) => {
+	    const id = event.pathParameters.id;
+	    taskStore_1.deleteTask(id)
+	        .then(() => {
+	        callback(null, {
+	            statusCode: 204,
+	        });
+	    });
+	};
 
 
 /***/ }),
@@ -129,6 +138,17 @@
 	            '${task.created_on}', 
 	            '${task.updated_on}'
 	        )`;
+	        connection.query(query, (error, result) => {
+	            if (error) {
+	                reject(error);
+	            }
+	            resolve(result);
+	        });
+	    });
+	};
+	exports.deleteTask = (id) => {
+	    return new Promise((resolve, reject) => {
+	        const query = `DELETE FROM Task WHERE id = ${id}`;
 	        connection.query(query, (error, result) => {
 	            if (error) {
 	                reject(error);
