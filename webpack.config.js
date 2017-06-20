@@ -4,6 +4,7 @@ module.exports = {
     entry: {
         taskHandlers: './src/handlers/taskHandlers',
         userHandlers: './src/handlers/userHandlers',
+        commentHandlers: './src/handlers/commentHandlers',
     },
     target: 'node',
     module: {

@@ -117,6 +117,36 @@ functions:
           path: users/{id}
           method: delete
 
+  
+  # COMMENTS
+  GetComment:
+    handler: commentHandlersEntry.GetComment
+    events:
+      - http:
+          path: comments/{id}
+          method: get
+  
+  GetCommentsPaged:
+    handler: commentHandlersEntry.GetCommentsPaged
+    events:
+      - http:
+          path: comments
+          method: get
+  
+  PostComment:
+    handler: commentHandlersEntry.PostComment
+    events:
+      - http:
+          path: comments
+          method: post
+
+  DeletComment:
+    handler: commentHandlersEntry.DeleteComment
+    events:
+      - http:
+          path: comments/{id}
+          method: delete
+
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

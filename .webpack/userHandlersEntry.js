@@ -46,7 +46,7 @@
 
 	"use strict";
 	Object.defineProperty(exports, "__esModule", { value: true });
-	const userStore_1 = __webpack_require__(79);
+	const userStore_1 = __webpack_require__(80);
 	exports.GetUser = (event, context, callback) => {
 	    userStore_1.getUserById(event.pathParameters.id)
 	        .then((result) => {
@@ -13151,7 +13151,8 @@
 
 
 /***/ }),
-/* 79 */
+/* 79 */,
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";

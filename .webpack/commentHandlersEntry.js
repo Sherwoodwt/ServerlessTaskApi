@@ -46,10 +46,10 @@
 
 	"use strict";
 	Object.defineProperty(exports, "__esModule", { value: true });
-	const taskStore_1 = __webpack_require__(79);
-	exports.GetTask = (event, context, callback) => {
+	const commentStore_1 = __webpack_require__(1);
+	exports.GetComment = (event, context, callback) => {
 	    const id = event.pathParameters.id;
-	    taskStore_1.getTaskById(id)
+	    commentStore_1.getCommentById(id)
 	        .then((result) => {
 	        callback(null, {
 	            statusCode: 200,
@@ -59,8 +59,8 @@
 	        });
 	    });
 	};
-	exports.GetTasksPaged = (event, context, callback) => {
-	    taskStore_1.getTasksPaged()
+	exports.GetCommentsPaged = (event, context, callback) => {
+	    commentStore_1.getCommentsPaged()
 	        .then((result) => {
 	        callback(null, {
 	            statusCode: 200,
@@ -70,9 +70,9 @@
 	        });
 	    });
 	};
-	exports.PostTask = (event, context, callback) => {
-	    const task = event.body;
-	    taskStore_1.createTask(task)
+	exports.PostComment = (event, context, callback) => {
+	    const comment = event.body;
+	    commentStore_1.createComment(comment)
 	        .then((result) => {
 	        callback(null, {
 	            statusCode: 201,
@@ -82,10 +82,10 @@
 	        });
 	    });
 	};
-	exports.DeleteTask = (event, context, callback) => {
+	exports.DeleteComment = (event, context, callback) => {
 	    const id = event.pathParameters.id;
-	    taskStore_1.deleteTask(id)
-	        .then(() => {
+	    commentStore_1.deleteComment(id)
+	        .then((result) => {
 	        callback(null, {
 	            statusCode: 204,
 	        });
@@ -94,7 +94,71 @@
 
 
 /***/ }),
-/* 1 */,
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	Object.defineProperty(exports, "__esModule", { value: true });
+	const mysql = __webpack_require__(2);
+	const info = __webpack_require__(78);
+	const connection = mysql.createConnection({
+	    host: info.host,
+	    user: info.user,
+	    password: info.password,
+	    database: info.database,
+	    port: 3306,
+	});
+	exports.getCommentById = (id) => {
+	    return new Promise((resolve, reject) => {
+	        connection.query(`SELECT * FROM Comment WHERE id = ${id}`, (error, result) => {
+	            if (error) {
+	                reject(error);
+	            }
+	            resolve(result);
+	        });
+	    });
+	};
+	exports.getCommentsPaged = () => {
+	    return new Promise((resolve, reject) => {
+	        connection.query(`SELECT * FROM Comment`, (error, result) => {
+	            if (error) {
+	                reject(error);
+	            }
+	            resolve(result);
+	        });
+	    });
+	};
+	exports.createComment = (comment) => {
+	    return new Promise((resolve, reject) => {
+	        const query = `INSERT INTO Comment (text, task_id, commenter_id, created_on, updated_on) VALUES (
+	            '${comment.text}',
+	            ${comment.task_id},
+	            ${comment.commenter_id},
+	            '${comment.created_on}',
+	            '${comment.updated_on}'
+	        )`;
+	        connection.query(query, (error, result) => {
+	            if (error) {
+	                reject(error);
+	            }
+	            resolve(result);
+	        });
+	    });
+	};
+	exports.deleteComment = (id) => {
+	    return new Promise((resolve, reject) => {
+	        const query = `DELETE FROM Comment WHERE id = ${id}`;
+	        connection.query(query, (error, result) => {
+	            if (error) {
+	                reject(error);
+	            }
+	            resolve(result);
+	        });
+	    });
+	};
+
+
+/***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13149,72 +13213,6 @@
 	exports.user = 'admin';
 	exports.password = 'Killer_Whale1';
 	exports.database = 'TaskManager';
-
-
-/***/ }),
-/* 79 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-	Object.defineProperty(exports, "__esModule", { value: true });
-	const mysql = __webpack_require__(2);
-	const info = __webpack_require__(78);
-	const connection = mysql.createConnection({
-	    host: info.host,
-	    user: info.user,
-	    password: info.password,
-	    database: info.database,
-	    port: 3306,
-	});
-	exports.getTaskById = (id) => {
-	    return new Promise((resolve, reject) => {
-	        connection.query(`SELECT * FROM Task WHERE id=${id}`, (error, result) => {
-	            if (error) {
-	                reject(error);
-	            }
-	            resolve(result[0]);
-	        });
-	    });
-	};
-	exports.getTasksPaged = () => {
-	    return new Promise((resolve, reject) => {
-	        connection.query(`SELECT * FROM Task`, (error, result) => {
-	            if (error) {
-	                reject(error);
-	            }
-	            resolve(result);
-	        });
-	    });
-	};
-	exports.createTask = (task) => {
-	    return new Promise((resolve, reject) => {
-	        const query = `INSERT INTO Task (title, description, due_date, assignee_id, created_on, updated_on) VALUE (
-	            '${task.title}',
-	            '${task.description}',
-	            '${task.due_date}',
-	            ${task.assignee_id},
-	            '${task.created_on}', 
-	            '${task.updated_on}'
-	        )`;
-	        connection.query(query, (error, result) => {
-	            if (error) {
-	                reject(error);
-	            }
-	            resolve(result);
-	        });
-	    });
-	};
-	exports.deleteTask = (id) => {
-	    return new Promise((resolve, reject) => {
-	        const query = `DELETE FROM Task WHERE id = ${id}`;
-	        connection.query(query, (error, result) => {
-	            if (error) {
-	                reject(error);
-	            }
-	            resolve(result);
-	        });
-	    });
-	};
 
 
 /***/ })
