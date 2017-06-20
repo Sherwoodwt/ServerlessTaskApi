@@ -1,5 +1,6 @@
 import {
     createUser,
+    deleteUser,
     getUserById,
     getUsersPaged,
 } from 'stores/userStore';
@@ -39,6 +40,16 @@ export const PostUser = (event, context, callback) => {
             body: {
                 result,
             },
+        });
+    });
+}
+
+export const DeleteUser = (event, context, callback) => {
+    const id = event.pathParameters.id;
+    deleteUser(id)
+    .then(() => {
+        callback(null, {
+            statusCode: 204,
         });
     });
 }

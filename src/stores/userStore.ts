@@ -45,3 +45,13 @@ export const createUser = (user: User) => {
         });
     });
 }
+
+export const deleteUser = (id: number) => {
+    return new Promise((resolve, reject) => {
+        const query = `DELETE FROM User WHERE id = ${id}`;
+        connection.query(query, (error, result) => {
+            if (error) { reject(error) }
+            resolve(result);
+        });
+    });
+}

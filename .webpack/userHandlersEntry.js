@@ -81,6 +81,15 @@
 	        });
 	    });
 	};
+	exports.DeleteUser = (event, context, callback) => {
+	    const id = event.pathParameters.id;
+	    userStore_1.deleteUser(id)
+	        .then(() => {
+	        callback(null, {
+	            statusCode: 204,
+	        });
+	    });
+	};
 
 
 /***/ }),
@@ -13185,6 +13194,17 @@
 	            '${user.date_joined}',
 	            '${user.notification_arn}'
 	        )`;
+	        connection.query(query, (error, result) => {
+	            if (error) {
+	                reject(error);
+	            }
+	            resolve(result);
+	        });
+	    });
+	};
+	exports.deleteUser = (id) => {
+	    return new Promise((resolve, reject) => {
+	        const query = `DELETE FROM User WHERE id = ${id}`;
 	        connection.query(query, (error, result) => {
 	            if (error) {
 	                reject(error);
