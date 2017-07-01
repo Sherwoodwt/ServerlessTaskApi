@@ -12,10 +12,11 @@ export const GetTask = (event, context, callback) => {
   .then((result) => {
     callback(null, {
       statusCode: 200,
-      body: {
-        result,
-      },
+      body: JSON.stringify(result),
     });
+  })
+  .catch((error) => {
+    callback(new Error(error));
   });
 }
 
@@ -24,23 +25,26 @@ export const GetTasksPaged = (event, context, callback) => {
   .then((result) => {
     callback(null, {
       statusCode: 200,
-      body: {
-        result,
-      },
+      body: JSON.stringify(result),
     });
+  })
+  .catch((error) => {
+    callback(new Error(error));
   });
 }
 
 export const PostTask = (event, context, callback) => {
-  const task = event.body;
+  console.log(event.body);
+  const task = JSON.parse(event.body);
   createTask(task as Task)
   .then((result) => {
     callback(null, {
       statusCode: 201,
-      body: {
-        result,
-      },
+      body: JSON.stringify(result),
     });
+  })
+  .catch((error) => {
+    callback(new Error(error));
   });
 }
 
@@ -51,5 +55,8 @@ export const DeleteTask = (event, context, callback) => {
     callback(null, {
       statusCode: 204,
     });
+  })
+  .catch((error) => {
+    callback(new Error(error));
   });
 }

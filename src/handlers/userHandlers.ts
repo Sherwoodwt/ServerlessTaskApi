@@ -12,9 +12,7 @@ export const GetUser = (event, context, callback) => {
     .then((result) => {
         callback(null, {
             statusCode: 200,
-            body: {
-                result,
-            },
+            body: JSON.stringify(result),
         });
     });
 }
@@ -24,22 +22,18 @@ export const GetUsersPaged = (event, context, callback) => {
     .then((result) => {
         callback(null, {
             statusCode: 200,
-            body: {
-                result,
-            },
+            body: JSON.stringify(result),
         });
     });
 }
 
 export const PostUser = (event, context, callback) => {
-    const user = event.body as User;
+    const user = JSON.parse(event.body) as User;
     createUser(user)
     .then((result) => {
         callback(null, {
             statusCode: 201,
-            body: {
-                result,
-            },
+            body: JSON.stringify(result),
         });
     });
 }

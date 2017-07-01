@@ -12,10 +12,8 @@ export const GetComment = (event, context, callback) => {
     .then((result) => {
         callback(null, {
             statusCode: 200,
-            body: {
-                result,
-            },
-        });
+            body: JSON.stringify(result),
+        })
     });
 }
 
@@ -24,22 +22,18 @@ export const GetCommentsPaged = (event, context, callback) => {
     .then((result) => {
         callback(null, {
             statusCode: 200,
-            body: {
-                result,
-            },
+            body: JSON.stringify(result),
         });
     });
 }
 
 export const PostComment = (event, context, callback) => {
-    const comment = event.body;
+    const comment = JSON.parse(event.body);
     createComment(comment)
     .then((result) => {
         callback(null, {
             statusCode: 201,
-            body: {
-                result,
-            },
+            body: JSON.stringify(result),
         });
     });
 }

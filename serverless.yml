@@ -21,12 +21,9 @@ provider:
   name: aws
   runtime: nodejs6.10
 
-plugins:
-  - serverless-webpack
-
 # you can overwrite defaults here
 #  stage: dev
-#  region: us-east-1
+  region: us-west-2
 
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
@@ -56,6 +53,9 @@ plugins:
 #  exclude:
 #    - exclude-me.js
 #    - exclude-me-dir/**
+
+plugins:
+  - serverless-webpack
 
 functions:
 
@@ -140,7 +140,7 @@ functions:
           path: comments
           method: post
 
-  DeletComment:
+  DeleteComment:
     handler: commentHandlersEntry.DeleteComment
     events:
       - http:
