@@ -8,3 +8,6 @@ secretInfo.ts
 
 # vscode
 .vscode
+
+# webpack
+.webpack

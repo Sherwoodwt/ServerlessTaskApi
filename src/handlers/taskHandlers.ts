@@ -3,21 +3,29 @@ import {
   deleteTask,
   getTaskById,
   getTasksPaged,
+  taskExists,
 } from 'stores/taskStore';
 import { Task } from 'models';
 
 export const GetTask = (event, context, callback) => {
   const id = event.pathParameters.id;
-  getTaskById(id)
+  taskExists(id)
   .then((result) => {
-    callback(null, {
-      statusCode: 200,
-      body: JSON.stringify(result),
-    });
+    if(result) {
+      getTaskById(id)
+      .then((result) => {
+        callback(null, { statusCode: 200, body: JSON.stringify(result) });
+      })
+      .catch((error) => {
+        callback(new Error(error), { statusCode: 500, body: 'server error' });
+      });
+    } else {
+      callback(null, { statusCode: 404, body: 'does not exists', })
+    }
   })
-  .catch((error) => {
-    callback(new Error(error));
-  });
+  .catch(() => {
+    callback(null, { statusCode: 500, body: 'Task not found' });
+  })
 }
 
 export const GetTasksPaged = (event, context, callback) => {

@@ -23,6 +23,17 @@ export const getTaskById = (id: number): Promise<any> => {
     });
 }
 
+export const taskExists = (id: number): Promise<any> => {
+    return new Promise((resolve, reject) => {
+        const connection = mysql.createConnection(connectionInfo);
+        connection.query(`SELECT COUNT(*) as result FROM Task WHERE id=${id}`, (error, result) => {
+            if (error) { reject(error) }
+            else { resolve(result[0].result > 0); }
+            connection.end();
+        });
+    });
+}
+
 export const getTasksPaged = (): Promise<any> => {
     return new Promise((resolve, reject) => {
         const connection = mysql.createConnection(connectionInfo);
